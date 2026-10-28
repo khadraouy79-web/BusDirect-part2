@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <title>BusDirect</title>
+</head>
+<body>
+    <header class="en-tete">
+      
+  <img class="logo" src="imgs/logo.png">  
+  <a class="tete-left"></a>
+  <nav>
+  <ul class="menu">
+  <li><a class="tete-right">réservation</a></li>
+  </ul>
+ </nav>
+    </header>
+    
+    <main>
+   <section class="bus-stuts">  
+        <h2>Statistiques</h2>
+  <p class="text-green-600">Places libres : <span id="availableCount">20</span></p><br>
+  <p class="text-red-600">Places occupées : <span id="occupiedCount">0</span></p><br>
+  <p class="text-blue-600">Recette totale : <span id="revenue">0</span> DH</p>
+     </section>  
+
+    <section class="enter-face" >
+     <div class="seats-container bg-gray-200  rounded-lg px-6 py-8 ring shadow-xl ring-gray-900/5">
+        <button class="seat" style="grid-area: box-1">1</button>
+        <button class="seat" style="grid-area: box-2">2</button>
+        <button class="seat" style="grid-area: box-3">3</button>
+        <button class="seat" style="grid-area: box-4">4</button>
+        <button class="seat" style="grid-area: box-5">5</button>
+        <button class="seat" style="grid-area: box-6">6</button>
+        <button class="seat" style="grid-area: box-7">7</button>
+        <button class="seat" style="grid-area: box-8">8</button>
+        <button class="seat" style="grid-area: box-9">9</button>
+        <button class="seat" style="grid-area: box-10">10</button>
+        <button class="seat" style="grid-area: box-11">11</button>
+        <button class="seat" style="grid-area: box-12">12</button>
+        <button class="seat" style="grid-area: box-13">13</button>
+        <button class="seat" style="grid-area: box-14">14</button>
+        <button class="seat" style="grid-area: box-15">15</button>
+        <button class="seat" style="grid-area: box-16">16</button>
+        <button class="seat" style="grid-area: box-17">17</button>
+        <button class="seat" style="grid-area: box-18">18</button>
+        <button class="seat" style="grid-area: box-19">19</button>
+        <button class="seat" style="grid-area: box-20">20</button>
+        
+     </div>
+     
+<aside class="unfomation">
+
+  <h2 class="text-xl m-2 font-bold">Réserver une place</h2>
+  <form id="reserveForm">
+    <label for="reserveName">Nom et Prénom</label>
+    <input type="text" id="reserveName" placeholder="Nom complet" required>
+
+    <label for="reserveSeat">Numéro du siège (facultatif)</label>
+    <select id="reserveSeat">
+      <option value="">Premier siège libre</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+      <option value="11">11</option>
+      <option value="12">12</option>
+      <option value="13">13</option>
+      <option value="14">14</option>
+      <option value="15">15</option>
+      <option value="16">16</option>
+      <option value="17">17</option>
+      <option value="18">18</option>
+      <option value="19">19</option>
+      <option value="20">20</option>
+   
+    </select>
+
+    <button type="submit">Réserver</button>
+    <p id="reserveMessage" aria-live="polite"></p>
+  </form>
+
+  <hr>
+
+  <h2 class="text-xl m-2 font-bold">Modifier une place</h2>
+  <form id="modifyForm">
+    <label for="modifyPassenger">Passager</label>
+    <select id="modifyPassenger" required>
+      <option value="">Choisir un passager</option>
+      <obtion value="">1</obtion>
+      
+    </select>
+
+    <label for="modifyName">Nouveau nom</label>
+    <input type="text" id="modifyName" required>
+
+    <label for="modifySeat">Nouveau siège (facultatif)</label>
+    <select id="modifySeat">
+      <option value="">Garder le siège actuel</option>
+    </select>
+
+    <button type="submit">Modifier</button>
+    <p id="modifyMessage" aria-live="polite"></p>
+  </form>
+
+  <hr>
+
+  <h2 class="text-xl m-2 font-bold">Supprimer une réservation</h2>
+  <form id="deleteForm">
+    <label for="deletePassenger">Passager</label>
+    <select id="deletePassenger" required>
+      <option value="">Choisir un passager</option>
+    </select>
+
+    <button type="submit">Supprimer</button>
+    <p id="deleteMessage" aria-live="polite"></p>
+  </form>
+
+
+</aside>
+
+    </section>
+    </main>
+
+    <footer>
+
+    </footer>
+</body>
+</html>
+
+
+
+
+
