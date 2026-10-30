@@ -15,7 +15,28 @@ body {
     justify-content: left;
 }
 
+.card {
+    background-color: #fff;
+    color: black;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    font-size: 20px;
+    
 
+}
+.cardTrajet {
+      background-color: #fff;
+    color: black;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    font-size: 20px;
+}
 
 .seat {
     background-color: #22c55e;
@@ -61,6 +82,73 @@ body {
     background: linear-gradient(135deg, #C1E3FF, #ABC7FF);
 }
 
+.bus-container {
+    display: grid;
+    grid-template-columns: 120px 120px 120px 120px ;
+    grid-auto-rows: 60px ;
+    gap: 15px;
+       grid-template-areas:
+        "box-1 box-2 box-3 box-4 ";
+    flex: 1;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    
+}
+
+.trajet-container {
+    display: grid;
+    grid-auto-columns: 180px;
+    grid-auto-rows: 165px ;
+    gap: 15px;
+       grid-template-areas:
+        "box-1 box-1 box-2 box-2 box-3 box-3"
+        "box-4 box-4 box-5 box-5 box-6 box-6"
+        
+        ;
+    flex: 1;
+    min-width: 0;
+    justify-content: center;
+    width: auto;
+    background: linear-gradient(135deg, #C1E3FF, #ABC7FF);
+}
+
+.organized {
+    display: flex;
+    width: 100%;
+    background: #fff;
+    border-radius: 10px;
+    margin: 15px; 
+    gap: 25px;
+    
+}
+
+
+#searshBus {
+
+border: 1px solid #A8A29E ;
+border-radius: 5px;
+padding: 10px;
+width: 500px;
+
+}
+
+#selectTrajet{
+
+border: 1px solid #A8A29E ;
+border-radius: 5px;
+padding: 10px;
+width: 350px;
+
+}
+
+.bus-info {
+    justify-content: center;
+}
+
 .seat:nth-child(4n + 3) {
     grid-column-start: 4;
 }
@@ -98,6 +186,20 @@ body {
     border-radius: 10px;
     
 
+}
+
+header {
+    
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 25px 9%;
+    background: #fff;
+    box-shadow: 0 2px 10px rgb(0 ,0 ,0, 0.1 );
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 99;
 }
 
 .tete-left {
@@ -220,6 +322,83 @@ transition: transform (2s ease);
 
 
 
+
+#searshBus {
+
+margin: 15px 0;
+border: 0;
+border-top: 1px solid #d6d3d1;
+
+}
+
+#selectTrajet {
+
+margin: 15px 0;
+border: 0;
+border-top: 1px solid #d6d3d1;
+
+}
+
+
+
+.pagination {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    color: #383838;
+    padding: 10px 40px;
+    border-radius: 6px;
+     justify-content: center;
+}
+
+ul {
+    margin: 20px 30px;
+}
+
+ul li{
+    display: inline-block;
+    margin: 0 10px;
+    background: #ccc;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 45px;
+    cursor: pointer;
+}
+
+ul li.active{
+    color: fff;
+    background-image: linear-gradient(#ff4568, #ff4568);
+    background-repeat: no-repeat;
+}
+
+.btn1, .bnt2 {
+    display: inline-flex;
+    align-items: center;
+    font-size: 22px;
+    font-weight: 500;
+    color: #383838;
+    background: transparent;
+    outline: none;
+    border: none;
+    cursor: pointer;
+
+}
+
+
+.btn1 img{
+    width: 24px;
+    margin-right: 15px;
+}
+
+.btn2 img{
+    width: 24px;
+    margin-left: 15px;
+    transform: rotate(180deg);
+}
 
 
 @media (max-width: 900px) {
