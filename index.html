@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
+    <script type="module" src="./js/trajets.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 
     <title>BusDirect - Trajects</title>
@@ -25,8 +25,8 @@
   
 <section class="titleMain"> 
 
-   <h1 id="hTitel">Gestion des trajets</h1>  
-   <p id="pTilel">Consultez et gérez les réservation de BusDirect.</p> 
+   <h1 id="hTitel" class="text-xl font-bold mb-1" >Gestion des trajets</h1>  
+   <p id="pTiltel">Consultez et gérez les réservation de BusDirect.</p> 
 
 </section>  
 
@@ -35,53 +35,44 @@
         <button class="card" style="grid-area: box-1">trajets test box</button>
         <button class="card" style="grid-area: box-2">Nombre de Passagers</button>
         <button class="card" style="grid-area: box-3">recentte totale</button>
-        <button class="card" style="grid-area: box-4">les trajet complet</button>
-        
- 
-        
+        <button class="card" style="grid-area: box-4">les trajet complet</button>   
      </div>
   </section>
   <section class="organized">
-   <table class="searsh">
-       <form id="searshBus">
-    <label for="searshBus"></Search></label>
+   
     <input type="text" id="searshBus" placeholder="Search Bus">
 
-    <label for="selectTrajet"></label>
     <select id="selectTrajet" required>
       <option value="">Tous les trajets</option>
 
    </select>   
    </form>
-   </table>
+
   </section>
 
  <section class="listTrajets">
 
 <section class="trajetInfo" >
-     <div class="trajet-container bg-gray-200  rounded-lg px-6 py-8 ring shadow-xl ring-gray-900/5">
-        <button class="cardTrajet" style="grid-area: box-1">test</button>
-        <button class="cardTrajet" style="grid-area: box-2">test2</button>
-        <button class="cardTrajet" style="grid-area: box-3">test3</button>
-        <button class="cardTrajet" style="grid-area: box-4">test4</button>
-        <button class="cardTrajet" style="grid-area: box-5">test5</button>
-        <button class="cardTrajet" style="grid-area: box-6">test6</button>
+     <div class="trajet-container" id="trajetContainer">
+
+     </div>
+  
        
         
 
  </section>
  <section class="pagination-container">
    <div class="pagination">
-      <button class="btn1"><img src="imgs/arrow.png"> prev</button>
+      <button class="btn1" ><img src="imgs/arrow.png"> prev</button>
       <ul>
-         <li class="link active" value="1" onclick="activeLink()">1</li>
-         <li class="link" value="2" onclick="activeLink()">2</li>
-         <li class="link" value="3" onclick="activeLink()">3</li>
-         <li class="link" value="4" onclick="activeLink()">4</li>
-         <li class="link" value="5" onclick="activeLink()">5</li>
-         <li class="link" value="6" onclick="activeLink()">6</li>
+         <li class="link active" value="1">1</li>
+         <li class="link" value="2">2</li>
+         <li class="link" value="3">3</li>
+         <li class="link" value="4">4</li>
+         <li class="link" value="5">5</li>
+         <li class="link" value="6">6</li>
       </ul>
-      <button class="btn2"> next <img src="imgs/arrow.png"> </button>
+      <button class="btn2">next <img src="imgs/arrow.png"> </button>
    </div>
  </section>
 
