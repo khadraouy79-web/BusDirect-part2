@@ -29,13 +29,12 @@ body {
 
 }
 .cardTrajet {
-      background-color: #fff;
+    background-color: #fff;
     color: black;
     border: none;
     cursor: pointer;
     border-radius: 10px;
     display: grid;
-    place-items: center;
     font-size: 20px;
 }
 
@@ -395,19 +394,42 @@ ul li.active{
 
 .cardTrajet {
     background: white;
-    padding: 20px;
+    padding: 1px;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .cardTrajet h2 {
-    font-size: 20px;
-    font-weight: bold;
     margin-bottom: 15px;
 }
 
 .cardTrajet p {
     margin-bottom: 8px;
+}
+
+.cabineButton {
+    background-color: #0794ec;
+    border-radius: 8px;
+    color: #fff;
+
+}
+
+.cabineButton:hover {
+    background-color: #1d4ed8;
+}
+
+.cardBusTitele {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cardBusTitele h3 {
+    color: #fff;
+    border-radius: 15px;
+    display: inline-block;
+    padding: 5px 10px;
+    justify-content: center;
+    
 }
 
 @media (max-width: 900px) {

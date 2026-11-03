@@ -1,6 +1,8 @@
 
 let reservations = [];
 
+
+
 const seats = document.querySelectorAll(".seat");
 
 // Reservation

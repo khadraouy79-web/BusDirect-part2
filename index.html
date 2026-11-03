@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <script type="module" src="./js/trajets.js"></script>
+    <script type="module" src="./js/cabine.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 
     <title>BusDirect - Trajects</title>
@@ -40,10 +41,12 @@
   </section>
   <section class="organized">
    
-    <input type="text" id="searshBus" placeholder="Search Bus">
+    <input type="text" id="searshBus" placeholder="Search by departure or destination">
 
     <select id="selectTrajet" required>
       <option value="">Tous les trajets</option>
+      <option value="available">Disponibles</option>
+      <option value="full">Complets</option>
 
    </select>   
    </form>
@@ -76,18 +79,7 @@
    </div>
  </section>
 
-<script>
-   let jsonData ;
-   window.addEventListener("load" , () => {
-   fetch ("./data/trips.json")
-   .then((response) => response.json())
-   .then((data) => {
-       jsonData = data;
-       console.log(jsonData);
-   })
-   .catch((err) => console.log(err));
-   });
-</script>
+
 </main>
 
     <footer>
