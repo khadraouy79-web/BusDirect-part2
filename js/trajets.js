@@ -7,7 +7,7 @@ window.addEventListener("load",() => {
     .then((data) => {
 
         jsonData = data;
-        displayTrajets(jsonData);
+        showPages(1);
 
         console.log(jsonData);
     })
@@ -51,10 +51,10 @@ export function displayTrajets(trajets) {
 
             <p class="text-gray-500">Prix : ${trajet.price} DH</p>
 
-            <p class="text-gray-500">Passagers : ${trajet.reservations.length}/${trajet.capacity}</p>
+            <p class="text-gray-500">agerPasss : ${trajet.reservations.length}/${trajet.capacity}</p>
             </div>
 
-            <button onclick="document.location='cabine.html'" class="cabineButton mr-2 ml-2 mb-2"> Gérer la cabine ➜ </button>
+            <button onclick="goToCabine(${trajet.id})" class="cabineButton mr-2 ml-2 mb-2"> Gérer la cabine ➜ </button>
 
         </div>
         `;
@@ -63,68 +63,97 @@ export function displayTrajets(trajets) {
 
 
 
-
 let link = document.getElementsByClassName("link");
 
 let prev = document.querySelector(".btn1");
 let next = document.querySelector(".btn2");
 
-prev.addEventListener("click", backBtn);
-next.addEventListener("click", nextBtn);
 
-let itemsPerPage = 1;
+
+let itemsPerPage = 6;
 let currentValue = 1;
 
-for(let l of link) {
-    l.addEventListener("click", activeLink);
-}
 
-function activeLink(event){
-    for(let l of link){
-        l.classList.remove("active");
-        
-    }
-    event.target.classList.add("active");
-    currentValue = Number(event.target.value);
-}
-
-function backBtn(){
-    if(currentValue > 1){
-        link[currentValue - 1].classList.remove("active");
-            currentValue--;
-        link[currentValue -1].classList.add("active");
-    }
-
-}
-
-function nextBtn(){
-    if(currentValue < 6){
-        link[currentValue -1].classList.remove("active");
-
-        currentValue++;
-    link[currentValue -1 ].classList.add("active");
-
-    }
-    
-}
-
-
-const filterItem = (trajet) => {
+function showPages(page) {
+    currentValue = page
    
-    function item(value){
-        if(value.id == trajet){
-                return true;
-                
-        }
-    }
-    const filterCategories = jsonData.filter(item);
+    let start = (currentValue - 1)*itemsPerPage
+    let ending = start + itemsPerPage
 
-    displayTrajets(filterCategories);
+    const result = jsonData.slice(start, ending);
+
+    displayTrajets(result);
+
+    for (let l of link) {
+        l.classList.remove("active");
+    }
+    link[currentValue - 1].classList.add("active");
+
 }
 
 
 
 
+for (let l of link) {
+    l.addEventListener("click", (event) => {
+        showPages(Number(event.currentTarget.textContent));
+    });
+}
+
+prev.addEventListener("click", () => {
+    if (currentValue > 1) {
+        showPages(currentValue - 1);
+    }
+});
+
+next.addEventListener("click", () => {
+    let totalPages = Math.ceil(jsonData.length / itemsPerPage);
+
+    if (currentValue < totalPages) {
+        showPages(currentValue + 1);
+    }
+});
+
+window.goToCabine = function(tripId) {
+
+    const selectedTrip = jsonData.find(function(trajet) {
+        return trajet.id === tripId ;
+
+    });
+
+    localStorage.setItem(
+        "selectedTrip" ,
+        JSON.stringify(selectedTrip)
+
+    );
+
+    window.location.href = "cabine.html" ;
+};
 
 
+const searshBus = document.getElementById("searshBus");
+const selectTrajet = document.getElementById("selectTrajet");
+searshBus.addEventListener("input", searchTrajets)
+selectTrajet.addEventListener("change", searchTrajets);
+
+function searchTrajets () {
+    const searchValue = searshBus.value.toLowerCase();
+    const status = selectTrajet.value;
+     
+    const result = jsonData.filter((trajet) => {
+        const matchSearch =
+        
+        trajet.departure.toLowerCase().includes(searchValue) ||
+        trajet.destination.toLowerCase().includes(searchValue)
+
+        const isFull = trajet.reservations.length >= trajet.capacity;
+        let matchStatus = true;
+        if (status === "available") matchStatus = !isFull;
+        if (status === "full") matchStatus = isFull;   
+        
+        return matchSearch && matchStatus;
+
+    });
+    displayTrajets(result);
+}
 

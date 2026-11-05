@@ -17,7 +17,8 @@
    <a class="tete-left"></a>
    <nav>
    <ul class="menu">
-   <li><a class="tete-right" href="index.html">Trajects</a></li>
+   <a class="tete-right" href="index.html">Trajects</a>
+   <a class="tete-right" href="cabine.html">réservation</a>
    </ul>
  </nav>
 </header>
@@ -33,17 +34,27 @@
 
   <section class="bus-info" >
      <div class="bus-container">
-        <button class="card" style="grid-area: box-1">trajets test box</button>
-        <button class="card" style="grid-area: box-2">Nombre de Passagers</button>
-        <button class="card" style="grid-area: box-3">recentte totale</button>
-        <button class="card" style="grid-area: box-4">les trajet complet</button>   
+        <div class="card" style="grid-area: box-1"><img class="usertLogo" src="imgs/user.png">
+         <h3> Nombre de Passagers </h3>
+         <p>0</p>
+      </div>
+        <div class="card" style="grid-area: box-2"><img class="totaleLogo" src="imgs/Totale.png">
+          <h3>recentte totale</h3>
+          <p>0</p>
+         </div>
+        <div class="card" style="grid-area: box-3"><img class="trajetLogo" src="imgs/Trajet.png">
+          <h3>les trajet complet</h3>
+          <p>20</p>
+         </div>   
      </div>
   </section>
+
   <section class="organized">
    
     <input type="text" id="searshBus" placeholder="Search by departure or destination">
 
     <select id="selectTrajet" required>
+
       <option value="">Tous les trajets</option>
       <option value="available">Disponibles</option>
       <option value="full">Complets</option>
@@ -72,8 +83,6 @@
          <li class="link" value="2">2</li>
          <li class="link" value="3">3</li>
          <li class="link" value="4">4</li>
-         <li class="link" value="5">5</li>
-         <li class="link" value="6">6</li>
       </ul>
       <button class="btn2">next <img src="imgs/arrow.png"> </button>
    </div>
