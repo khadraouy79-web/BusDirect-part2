@@ -15,13 +15,19 @@ export function initReservations(state, elements, updateDisplay) {
     const reserveName = elements.reserveName;
     const reservePhone = elements.reservePhone;
     const reserveSeat = elements.reserveSeat;
+
     const modifyForm = elements.modifyForm;
     const modifyPassenger = elements.modifyPassenger;
     const modifyName = elements.modifyName;
     const modifyPhone = elements.modifyPhone;
     const modifySeat = elements.modifySeat;
+
     const deleteForm = elements.deleteForm;
     const deletePassenger = elements.deletePassenger;
+
+    const reserveWaitingForm = elements.reserveWaitingForm;
+    const reserveWaitingName = elements.reserveWaitingName;
+    const reserveWaitingPhone = elements.reserveWaitingPhone;
 
     function showMessage(element, message, error) {
         element.textContent = message;
@@ -32,6 +38,47 @@ export function initReservations(state, elements, updateDisplay) {
             if (element.textContent === currentMessage) element.textContent = "";
         }, 3000);
     }
+
+    reserveWaitingForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const passengerName = reserveWaitingName.value.trim();
+        const phone = reserveWaitingPhone.value.trim();
+
+        if (isEmptyName(passengerName)) {
+            showMessage(elements.waitingMessage, "Veuillez saisir le nom du passager.", true);
+            return;
+        }
+
+        if (!isValidPhone(phone)) {
+            showMessage(elements.waitingMessage, "Téléphone invalide : 06 ou 07 + 8 chiffres.", true);
+            return;
+        }
+
+        if (findExistingPassenger(state.reservations, passengerName) ||
+            findExistingPassenger(state.waitingList, passengerName)) {
+            showMessage(elements.waitingMessage, "Ce nom existe déjà sur ce trajet !", true);
+            return;
+        }
+
+        if (findExistingPhone(state.reservations, phone) ||
+            findExistingPhone(state.waitingList, phone)) {
+            showMessage(elements.waitingMessage, "Ce téléphone existe déjà sur ce trajet !", true);
+            return;
+        }
+
+        if (state.reservations.length < seats.length) {
+            showMessage(elements.waitingMessage, "Il reste des places libres ! Réservez directement.", true);
+            return;
+        }
+
+        state.waitingList.push({ name: passengerName, phone: phone });
+        const position = state.waitingList.length;
+
+        reserveWaitingForm.reset();
+        updateDisplay();
+        showMessage(elements.waitingMessage, "Ajouté à la liste d’attente ! Position : " + position + ".", false);
+    });
 
     reserveForm.addEventListener("submit", function(event) {
         event.preventDefault();

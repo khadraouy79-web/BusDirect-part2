@@ -44,6 +44,11 @@ const modifyPhone = document.querySelector("#modifyPhone");
 const deleteForm = document.querySelector("#deleteForm");
 const deletePassenger = document.querySelector("#deletePassenger");
 
+
+const reserveWaitingForm = document.querySelector("#reserveWaitingForm");
+const reserveWaitingName = document.querySelector("#reserveWaitingName");
+const reserveWaitingPhone = document.querySelector("#reserveWaitingPhone");
+
 for (let i = 0; i < seats.length; i++) {
     seats[i].dataset.seat = seats[i].textContent.trim();
 }
@@ -85,6 +90,10 @@ initReservations(state, {
     modifySeat,
     deleteForm,
     deletePassenger,
+    reserveWaitingForm,
+    reserveWaitingName,
+    reserveWaitingPhone,
+    waitingMessage: document.querySelector("#waitingMessage"),
     reserveMessage: document.querySelector("#reserveMessage"),
     modifyMessage: document.querySelector("#modifyMessage"),
     deleteMessage: document.querySelector("#deleteMessage")

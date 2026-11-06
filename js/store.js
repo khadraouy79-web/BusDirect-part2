@@ -55,3 +55,5 @@ export function saveTrip(selectedTrip, reservations, waitingList) {
         localStorage.setItem("allTrips", JSON.stringify(allTrips));
     }
 }
+
+
