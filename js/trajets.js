@@ -1,159 +1,106 @@
-export let jsonData = [];
-
-window.addEventListener("load",() => {
-
-    fetch("./data/trips.json")
-    .then((response) => response.json())
-    .then((data) => {
-
-        jsonData = data;
-        showPages(1);
-
-        console.log(jsonData);
-    })
-    .catch((err) => console.log(err));
-});
-
-
-export function displayTrajets(trajets) {
-    const container = document.getElementById("trajetContainer");
-    container.innerHTML = "";
-    trajets.forEach((trajet) => {
-
-        const isFull = trajet.reservations.length >= trajet.capacity;
-
-        let busStatus = "";
-        let busColor = "" ;
-
-
-        if (isFull){
-            busStatus = "Complète";
-            busColor = "red" ;
-
-        }else{
-            busStatus = "Disponible";
-            busColor = "green" ;
-        }
-
-        container.innerHTML += `
-        
-          <div class="cardTrajet">
-            <div class ="cardBusTitele m-3 flex items-center justify-between text-xl font-semibold"> 
-            <h2>${trajet.departure} → ${trajet.destination}</h2> 
-            <div class="cardBusTitele">
-             <h3 class="px-3 py-3" style="background-color: ${busColor}">${busStatus}</h3>
-             </div>
-            </div>
-            <div class="ml-2">
-            <p class="text-gray-500">Départ : ${trajet.departureTime}</p>
-
-            <p class="text-gray-500">Arrivée : ${trajet.arrivalTime}</p>
-
-            <p class="text-gray-500">Prix : ${trajet.price} DH</p>
-
-            <p class="text-gray-500">agerPasss : ${trajet.reservations.length}/${trajet.capacity}</p>
-            </div>
-
-            <button onclick="goToCabine(${trajet.id})" class="cabineButton mr-2 ml-2 mb-2"> Gérer la cabine ➜ </button>
-
-        </div>
-        `;
-    });
-}
-
-
+import { jsonData, loadTrips, saveSelectedTrip } from "./store.js";
+import { displayTrajets } from "./render.js";
 
 let link = document.getElementsByClassName("link");
-
 let prev = document.querySelector(".btn1");
 let next = document.querySelector(".btn2");
-
-
-
 let itemsPerPage = 6;
 let currentValue = 1;
-
+let filteredTrips = [];
 
 function showPages(page) {
-    currentValue = page
-   
-    let start = (currentValue - 1)*itemsPerPage
-    let ending = start + itemsPerPage
+    let totalPages = Math.ceil(filteredTrips.length / itemsPerPage);
+    if (totalPages === 0) totalPages = 1;
+    if (page < 1) page = 1;
+    if (page > totalPages) page = totalPages;
+    currentValue = page;
 
-    const result = jsonData.slice(start, ending);
-
+    let start = (currentValue - 1) * itemsPerPage;
+    let ending = start + itemsPerPage;
+    const result = filteredTrips.slice(start, ending);
     displayTrajets(result);
 
-    for (let l of link) {
-        l.classList.remove("active");
+    const pages = document.querySelector(".pagination ul");
+    pages.innerHTML = "";
+    for (let i = 1; i <= totalPages; i++) {
+        const li = document.createElement("li");
+        li.classList.add("link");
+        if (i === currentValue) li.classList.add("active");
+        li.textContent = i;
+        li.addEventListener("click", function() { showPages(i); });
+        pages.appendChild(li);
     }
-    link[currentValue - 1].classList.add("active");
-
-}
-
-
-
-
-for (let l of link) {
-    l.addEventListener("click", (event) => {
-        showPages(Number(event.currentTarget.textContent));
-    });
+    prev.disabled = currentValue === 1;
+    next.disabled = currentValue === totalPages;
 }
 
 prev.addEventListener("click", () => {
-    if (currentValue > 1) {
-        showPages(currentValue - 1);
-    }
+    if (currentValue > 1) showPages(currentValue - 1);
 });
-
 next.addEventListener("click", () => {
-    let totalPages = Math.ceil(jsonData.length / itemsPerPage);
-
-    if (currentValue < totalPages) {
-        showPages(currentValue + 1);
-    }
+    let totalPages = Math.ceil(filteredTrips.length / itemsPerPage);
+    if (currentValue < totalPages) showPages(currentValue + 1);
 });
 
 window.goToCabine = function(tripId) {
-
     const selectedTrip = jsonData.find(function(trajet) {
-        return trajet.id === tripId ;
-
+        return trajet.id === tripId;
     });
-
-    localStorage.setItem(
-        "selectedTrip" ,
-        JSON.stringify(selectedTrip)
-
-    );
-
-    window.location.href = "cabine.html" ;
+    saveSelectedTrip(selectedTrip);
+    window.location.href = "cabine.html";
 };
-
 
 const searshBus = document.getElementById("searshBus");
 const selectTrajet = document.getElementById("selectTrajet");
-searshBus.addEventListener("input", searchTrajets)
+searshBus.addEventListener("input", searchTrajets);
 selectTrajet.addEventListener("change", searchTrajets);
 
-function searchTrajets () {
+function searchTrajets() {
     const searchValue = searshBus.value.toLowerCase();
     const status = selectTrajet.value;
-     
-    const result = jsonData.filter((trajet) => {
+    filteredTrips = jsonData.filter((trajet) => {
         const matchSearch =
-        
-        trajet.departure.toLowerCase().includes(searchValue) ||
-        trajet.destination.toLowerCase().includes(searchValue)
-
+            trajet.departure.toLowerCase().includes(searchValue) ||
+            trajet.destination.toLowerCase().includes(searchValue);
         const isFull = trajet.reservations.length >= trajet.capacity;
         let matchStatus = true;
         if (status === "available") matchStatus = !isFull;
-        if (status === "full") matchStatus = isFull;   
-        
+        if (status === "full") matchStatus = isFull;
         return matchSearch && matchStatus;
-
     });
-    displayTrajets(result);
+    showPages(1);
 }
 
+const totalePassengers = document.getElementById("totalePassengers");
+const totaleRecettes = document.getElementById("totaleRecettes");
+const totaleTrajets = document.getElementById("totaleTrajets");
+
+function updateStatistics() {
+    let passengers = 0;
+    let revenue = 0;
+    let completedTrips = 0;
+    for (let i = 0; i < jsonData.length; i++) {
+        passengers += jsonData[i].reservations.length;
+        for (let j = 0; j < jsonData[i].reservations.length; j++) {
+            if (Number(jsonData[i].reservations[j].seat) <= 4) {
+                revenue += Math.round(jsonData[i].price * 1.1);
+            } else {
+                revenue += Number(jsonData[i].price);
+            }
+        }
+        if (jsonData[i].reservations.length >= jsonData[i].capacity) completedTrips++;
+    }
+    totalePassengers.textContent = passengers;
+    totaleRecettes.textContent = revenue + " DH";
+    totaleTrajets.textContent = completedTrips;
+}
+
+window.addEventListener("load", () => {
+    loadTrips()
+        .then(() => {
+            filteredTrips = jsonData;
+            showPages(1);
+            updateStatistics();
+        })
+        .catch((err) => console.log(err));
+});
